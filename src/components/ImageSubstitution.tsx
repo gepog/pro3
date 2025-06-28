@@ -50,8 +50,10 @@ export const ImageSubstitution: React.FC<ImageSubstitutionProps> = ({
       // Validate image URL by trying to load it
       const img = new Image();
       img.onload = () => {
+        console.log('Image validated, updating:', carouselId, movieIndex, newImageUrl);
         onImageUpdate(carouselId, movieIndex, newImageUrl);
         onClose();
+        setIsLoading(false);
       };
       img.onerror = () => {
         alert('Invalid image URL. Please try another image.');

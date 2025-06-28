@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Movie } from '../types';
 
 export interface CarouselData {
@@ -10,7 +10,13 @@ export interface CarouselData {
 export const useCarouselState = (initialCarousels: CarouselData[]) => {
   const [carousels, setCarousels] = useState<CarouselData[]>(initialCarousels);
 
+  // Update carousels when initial data changes
+  useEffect(() => {
+    setCarousels(initialCarousels);
+  }, [initialCarousels]);
+
   const updateMovieImage = useCallback((carouselId: string, movieIndex: number, newImageUrl: string) => {
+    console.log('Updating image for carousel:', carouselId, 'movie index:', movieIndex, 'new URL:', newImageUrl);
     setCarousels(prev =>
       prev.map(carousel =>
         carousel.id === carouselId

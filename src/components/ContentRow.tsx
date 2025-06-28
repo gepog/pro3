@@ -45,6 +45,7 @@ export const ContentRow: React.FC<ContentRowProps> = ({
   };
 
   const handleImageUpdate = (movieIndex: number, newImageUrl: string) => {
+    console.log('ContentRow handleImageUpdate called:', carouselId, movieIndex, newImageUrl);
     onUpdateMovieImage?.(carouselId, movieIndex, newImageUrl);
   };
 

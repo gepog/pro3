@@ -215,6 +215,11 @@ function App() {
     ? [{ id: 'mylist', title: 'My List', movies: allMyListMovies }, ...updatedContentRows]
     : updatedContentRows;
 
+  // Create a function to handle image updates that works with the carousel state
+  const handleImageUpdate = (carouselId: string, movieIndex: number, newImageUrl: string) => {
+    updateMovieImage(carouselId, movieIndex, newImageUrl);
+  };
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#081932' }}>
       <Header
@@ -287,11 +292,11 @@ function App() {
                 <ContentRow
                   carouselId={row.id}
                   title={row.title}
-                  movies={row.movies}
+                  movies={getCarousel(row.id)?.movies || row.movies}
                   onPlay={handlePlay}
                   onAddToList={handleAddToList}
                   onMoreInfo={handleMoreInfo}
-                  onUpdateMovieImage={updateMovieImage}
+                  onUpdateMovieImage={handleImageUpdate}
                   onUpdateMovieData={updateMovieData}
                   isMyListRow={row.id === 'mylist'}
                   myList={myList}
