@@ -11,7 +11,6 @@ export const useCarouselState = (initialCarousels: CarouselData[]) => {
   const [carousels, setCarousels] = useState<CarouselData[]>(initialCarousels);
 
   const updateMovieImage = useCallback((carouselId: string, movieIndex: number, newImageUrl: string) => {
-    console.log('useCarouselState: Updating image for carousel:', carouselId, 'index:', movieIndex);
     setCarousels(prev =>
       prev.map(carousel =>
         carousel.id === carouselId
