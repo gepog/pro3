@@ -186,7 +186,7 @@ function App() {
         moviesWithUpdatedLikes.find(m => m.id === movie.id) || movie
       )
     };
-  }).filter((row, index) => index !== 1); // Remove the second carousel (index 1)
+  });
 
   // Also include custom movies from content rows that are in myList
   const myListMovies = movies.filter(movie => myList.includes(movie.id));
