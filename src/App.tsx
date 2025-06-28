@@ -55,6 +55,10 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Debug function to check carousel IDs
+  useEffect(() => {
+    console.log('Available carousels:', carousels.map(c => ({ id: c.id, title: c.title })));
+  }, [carousels]);
   const handleSearch = (query: string) => {
     setSearchQuery(query);
     if (query.trim()) {

@@ -45,10 +45,12 @@ export const ContentRow: React.FC<ContentRowProps> = ({
   };
 
   const handleImageUpdate = (movieIndex: number, newImageUrl: string) => {
+    console.log('Updating image for carousel:', carouselId, 'movie index:', movieIndex, 'new URL:', newImageUrl);
     onUpdateMovieImage?.(carouselId, movieIndex, newImageUrl);
   };
 
   const handleEditImage = (movieIndex: number, currentImageUrl: string) => {
+    console.log('Opening image editor for carousel:', carouselId, 'movie index:', movieIndex);
     setShowImageSubstitution({
       movieIndex,
       currentImageUrl,
