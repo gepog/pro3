@@ -12,6 +12,7 @@ import { HelpModal } from './components/HelpModal';
 import { LogoutModal } from './components/LogoutModal';
 import { featuredMovie, contentRows, movies, getMostLikedMovies } from './data/movies';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { useCarouselState, CarouselData } from './hooks/useCarouselState';
 import { Movie } from './types';
 
 function App() {
@@ -29,6 +30,21 @@ function App() {
   const [searchSuggestions, setSearchSuggestions] = useState<Movie[]>([]);
   const [movieLikes, setMovieLikes] = useLocalStorage<Record<string, number>>('project-likes', {});
   const [userLikes, setUserLikes] = useLocalStorage<string[]>('project-user-likes', []);
+
+  // Initialize carousel data with unique IDs
+  const initialCarousels: CarouselData[] = contentRows.map(row => ({
+    id: row.id,
+    title: row.title,
+    movies: row.movies
+  }));
+
+  const {
+    carousels,
+    updateMovieImage,
+    updateMovieBackdrop,
+    updateMovieData,
+    getCarousel
+  } = useCarouselState(initialCarousels);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -138,13 +154,13 @@ function App() {
   }));
 
   // Update content rows with current like counts
-  const updatedContentRows = contentRows.map(row => {
+  const updatedContentRows = carousels.map(row => {
     if (row.id === 'most-liked') {
       // Get all movies from regular movies array and custom content rows
       const allMoviesForLiking = [...moviesWithUpdatedLikes];
       
       // Add custom movies from content rows to the liking system
-      contentRows.forEach(contentRow => {
+      carousels.forEach(contentRow => {
         if (contentRow.id !== 'most-liked') {
           contentRow.movies.forEach(movie => {
             // Only add if it's not already in the regular movies array
@@ -179,7 +195,7 @@ function App() {
   const customMoviesInMyList: Movie[] = [];
   const addedIds = new Set(myListMovies.map(m => m.id));
   
-  contentRows.forEach(row => {
+  carousels.forEach(row => {
     row.movies.forEach(movie => {
       if (myList.includes(movie.id) && !addedIds.has(movie.id)) {
         // Apply current like count to custom movies
@@ -269,11 +285,14 @@ function App() {
                 className={row.id === 'mylist' ? 'pt-8' : ''}
               >
                 <ContentRow
+                  carouselId={row.id}
                   title={row.title}
                   movies={row.movies}
                   onPlay={handlePlay}
                   onAddToList={handleAddToList}
                   onMoreInfo={handleMoreInfo}
+                  onUpdateMovieImage={updateMovieImage}
+                  onUpdateMovieData={updateMovieData}
                   isMyListRow={row.id === 'mylist'}
                   myList={myList}
                 />

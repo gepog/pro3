@@ -43,7 +43,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
               className="group cursor-pointer"
              onClick={() => onMoreInfo(movie)}
             >
-              <div className="relative overflow-hidden rounded-md transition-transform duration-300 group-hover:scale-105">
+              <div className="relative overflow-hidden rounded-md transition-transform duration-300 group-hover:scale-105" data-search-result>
                 <img
                   src={movie.thumbnail}
                   alt={movie.title}
